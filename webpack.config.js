@@ -5,7 +5,8 @@ const MiniCssPlugin = require("mini-css-extract-plugin")
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "bundle.js",
+    // hashing function for bundle
+    filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
     // specify the base path for all the assets
     //
@@ -67,7 +68,8 @@ module.exports = {
   plugins:[
       new TerserPlugin(),
       new MiniCssPlugin({
-          filename: 'styles.css'
+        //   hashing for css
+          filename: 'styles.[contenthash].css'
       })
   ]
 };
