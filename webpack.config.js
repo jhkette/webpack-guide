@@ -1,7 +1,7 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssPlugin = require("mini-css-extract-plugin")
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   entry: "./src/index.js",
   output: {
@@ -70,6 +70,7 @@ module.exports = {
       new MiniCssPlugin({
         //   hashing for css
           filename: 'styles.[contenthash].css'
-      })
+      }),
+      new CleanWebpackPlugin()
   ]
 };
