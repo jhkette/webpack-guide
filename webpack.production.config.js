@@ -1,20 +1,19 @@
 const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssPlugin = require("mini-css-extract-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: "./src/index.js",
   output: {
-    // hashing function for bundle
-    filename: "bundle.[contenthash].js",
+    // hashing function for bundle - don't need for development
+    filename: "bundle.js",
     path: path.resolve(__dirname, "./dist"),
     // specify the base path for all the assets
     //
     // Try the environment variable, otherwise use root
     // const ASSET_PATH = process.env.ASSET_PATH || '/';
-    publicPath: "dist/",
+    publicPath: "",
   },
-  mode: "none",
+  mode: "development",
   module: {
     rules: [
       {
@@ -37,7 +36,7 @@ module.exports = {
         use: [
           // css loader reads file and returns contents,
           // style loader injects css into dom
-          MiniCssPlugin.loader,
+          "style-loader",
           "css-loader",
         ],
       },
@@ -46,7 +45,7 @@ module.exports = {
         use: [
           // css loader reads file and returns contents,
           // style loader injects css into dom
-          MiniCssPlugin.loader,
+          "style-loader",
           "css-loader",
           "sass-loader",
         ],
@@ -66,11 +65,14 @@ module.exports = {
     ],
   },
   plugins:[
-      new TerserPlugin(),
-      new MiniCssPlugin({
-        //   hashing for css
-          filename: 'styles.[contenthash].css'
-      }),
-      new CleanWebpackPlugin()
+    
+     // don't need mini css
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        title: 'Hello world',
+        meta: {
+            description: 'Some description'
+        }
+    })
   ]
 };
